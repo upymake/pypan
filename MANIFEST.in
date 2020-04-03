@@ -1,2 +1,1 @@
-include *.txt *.ini *.cfg *.rst *.md
-recursive-include pypan *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.js *.html *.xml *.jinja2
+recursive-include pypans .* *.png *.css *.gif *.jpg *.pt *.txt *.js *.html *.xml *.md *.ini *.in *.yml *.toml *.sh

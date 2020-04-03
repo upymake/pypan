@@ -13,7 +13,7 @@
 
 # Pypan
 
-> A command-line utility that creates **python** projects from base template.
+> A command-line utility that creates fresh **python** project from base template.
 
 ## Tools
 
@@ -31,7 +31,22 @@
 
 ### Quick start
 
+```bash
+pip install pypans
+✨ 🍰 ✨
+```
+
 ### Source code
+
+```bash
+git clone git@github.com:vyahello/pypans.git
+pip install -e .
+```
+
+Or using direct source:
+```bash
+pip install git+https://github.com/vyahello/pypans@0.0.1
+```
 
 ## Development notes
 

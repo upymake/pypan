@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PACKAGE="pypan"
+PACKAGE="pypans"
 
 
 --entry-point-box() {

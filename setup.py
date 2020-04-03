@@ -1,6 +1,6 @@
 """Package setup entrypoint."""
 from typing import IO, Sequence
-from pypan import (
+from pypans import (
     __author__ as __author,
     __doc__ as __full_doc,
     __email__ as __email,
@@ -53,4 +53,5 @@ if __name__ == "__main__":
             "Operating System :: OS Independent",
         ),
         python_requires=">=3.6",
+        entry_points={"console_scripts": ("pypan = pypans.__main__:easypan",)},
     )
