@@ -2,6 +2,7 @@ import os
 import site
 from abc import abstractmethod
 from dataclasses import dataclass
+from datetime import datetime
 from punish.style import AbstractStyle
 from pypans.file import write_to_file, replace_content, File
 
@@ -30,15 +31,19 @@ class _Meta(AbstractStyle):
         replace_content(File.ANALYSER.value, from_replace="<package>", to_replace=self._name)
 
     def build_readme(self) -> None:
-        replace_content(File.README.value, from_replace="<project>", to_replace=self._name)
-        replace_content(File.README.value, from_replace="<username>", to_replace=self._user.name)
+        replace_content(File.README.value, from_replace="<package>", to_replace=self._name)
+        replace_content(
+            File.README.value, from_replace="<username>", to_replace="-".join(self._user.name.lower().split())
+        )
         replace_content(File.README.value, from_replace="<email>", to_replace=self._user.email)
 
     def build_license(self) -> None:
+        replace_content(File.LICENSE.value, from_replace="<year>", to_replace=str(datetime.now().year))
         replace_content(File.LICENSE.value, from_replace="<package>", to_replace=self._name)
 
     def build_packaging(self) -> None:
-        replace_content(File.MANIFEST.value, from_replace="<project>", to_replace=self._name)
+        replace_content(File.CHANGELOG.value, from_replace="<date>", to_replace="{:%d.%m.%Y}".format(datetime.now()))
+        replace_content(File.MANIFEST.value, from_replace="<package>", to_replace=self._name)
         replace_content(File.PYPIRC.value, from_replace="<username>", to_replace=self._user.name)
         replace_content(File.SETUP.value, from_replace="package", to_replace=self._name)
 

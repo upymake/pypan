@@ -1,20 +1,26 @@
 """Contains interfaces for package tools executor."""
+import click
 from termcolor import colored
 from pypans.project import User, Project
 
 
-def easypan() -> None:
+@click.command()
+@click.option("--start", "-s", show_default=True, is_flag=True, help="Starts python project composer")
+def easypan(start: bool) -> None:
     """Runs `pypan` command line tool."""
-    project = Project(
-        name=input(colored(">>> Please name your application (e.g bomber): ", "green")).lower(),
-        user=User(
-            name=input(colored(">>> Please enter your username (e.g John Udot): ", "green")),
-            email=input(colored(">>> Please enter your email (e.g user@gmail.com): ", "green")),
-        ),
-    )
-    project.build_package()
-    project.build_tests()
-    project.build_meta()
+    if start:
+        project: Project = Project(
+            name=input(colored(">>> Please name your application (e.g bomber): ", "green")).lower(),
+            user=User(
+                name=input(colored(">>> Please enter your username (e.g John Udot): ", "green")),
+                email=input(colored(">>> Please enter your email (e.g user@gmail.com): ", "green")),
+            ),
+        )
+        project.build_package()
+        project.build_tests()
+        project.build_meta()
+    else:
+        click.echo(click.get_current_context().get_help())
 
 
 if __name__ == "__main__":

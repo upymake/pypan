@@ -1,8 +1,8 @@
 ![Screenshot](icon.png)
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![Build Status](https://travis-ci.org/vyahello/<project>.svg?branch=master)](https://travis-ci.org/vyahello/<project>)
-[![Coverage Status](https://coveralls.io/repos/github/vyahello/<project>/badge.svg?branch=master)](https://coveralls.io/github/vyahello/<project>?branch=master)
+[![Build Status](https://travis-ci.org/vyahello/<package>.svg?branch=master)](https://travis-ci.org/vyahello/<package>)
+[![Coverage Status](https://coveralls.io/repos/github/vyahello/<package>/badge.svg?branch=master)](https://coveralls.io/github/vyahello/<package>?branch=master)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with pylint](https://img.shields.io/badge/pylint-checked-blue)](https://www.pylint.org)
 [![Checked with flake8](https://img.shields.io/badge/flake8-checked-blue)](http://flake8.pycqa.org/)
@@ -11,7 +11,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE.md)
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 
-# <project>
+# <package>
 
 > Brief description for a tool.
 
@@ -32,14 +32,20 @@
 ### Quick start
 
 ```bash
-
+pip install <package>
+✨ 🍰 ✨
+```
+Then please run command below to start tool executor:
+```bash
+<package>
 ```
 
 ### Source code
 
 ```bash
-
+python -m <package> --help
 ```
+
 
 ## Development notes
 

@@ -37,5 +37,5 @@ class File(Enum):
 
     @classmethod
     def templates_from(cls, from_path: str = "./") -> None:
-        for file in File:  # type: File
+        for file in cls:  # type: File
             shutil.copyfile(os.path.join(from_path, file.value), file.value)
