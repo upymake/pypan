@@ -1,13 +1,16 @@
 """Contains interfaces for managing python project."""
 import os
 import site
+import sys
 from abc import abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
 from punish.style import AbstractStyle
 from pypans.file import Template, replace_content, write_to_file
 
-SITE_TEMPLATE: str = os.path.join(site.getsitepackages()[0], os.path.dirname(__file__), "template")
+SITE_TEMPLATE: str = os.path.join(
+    site.getsitepackages()[0], os.path.dirname(__file__), "template"  # pylint:disable=no-member
+)
 NEW_LINE: str = "\n"
 
 
@@ -43,14 +46,14 @@ class _Meta(AbstractStyle):
         """Builds readme file."""
         replace_content(Template.README.value, from_replace="<package>", to_replace=self._name)
         replace_content(
-            Template.README.value, from_replace="<username>", to_replace="-".join(self._user.name.lower().split())
+            Template.README.value, from_replace="<username>", to_replace=".".join(self._user.name.lower().split())
         )
         replace_content(Template.README.value, from_replace="<email>", to_replace=self._user.email)
 
     def build_license(self) -> None:
         """Builds license file."""
         replace_content(Template.LICENSE.value, from_replace="<year>", to_replace=str(datetime.now().year))
-        replace_content(Template.LICENSE.value, from_replace="<package>", to_replace=self._name)
+        replace_content(Template.LICENSE.value, from_replace="<username>", to_replace=self._user.name)
 
     def build_packaging(self) -> None:
         """Builds packaging files."""
@@ -58,8 +61,13 @@ class _Meta(AbstractStyle):
             Template.CHANGELOG.value, from_replace="<date>", to_replace="{:%d.%m.%Y}".format(datetime.now())
         )
         replace_content(Template.MANIFEST.value, from_replace="<package>", to_replace=self._name)
-        replace_content(Template.PYPIRC.value, from_replace="<username>", to_replace=self._user.name)
+        replace_content(
+            Template.PYPIRC.value, from_replace="<username>", to_replace=".".join(self._user.name.lower().split())
+        )
         replace_content(Template.SETUP.value, from_replace="package", to_replace=self._name)
+        replace_content(
+            Template.RUNTIME.value, from_replace="<version>", to_replace=".".join(map(str, sys.version_info[:3]))
+        )
 
     def build_pytest(self) -> None:
         """Builds pytest file."""
@@ -74,7 +82,7 @@ class _Meta(AbstractStyle):
 class _Application(Package):
     """Represents application content builder."""
 
-    def __init__(self, name: str, user: User) -> None:
+    def __init__(self, name: str, user: User) -> None:  # pylint: disable=super-init-not-called
         self._name: str = name
         self._user: User = user
 
@@ -96,7 +104,7 @@ class _Application(Package):
             path=os.path.join(self._name, "__main__.py"),
             content=(
                 f'"""Represents executable entrypoint for `{self._name}` application."""'
-                f'{NEW_LINE * 3}def main() -> None:{NEW_LINE}    """Runs `{self._name}` command line tool."""'
+                f'{NEW_LINE * 3}def main() -> None:{NEW_LINE}    """Runs `{self._name}` application."""'
                 f"{NEW_LINE * 2}    pass{NEW_LINE * 3}"
                 f'if __name__ == "__main__":{NEW_LINE}    pass{NEW_LINE}'
             ),
@@ -106,9 +114,9 @@ class _Application(Package):
 class _Tests(Package):
     """Represents tests content builder."""
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str) -> None:  # pylint: disable=super-init-not-called
         self._name: str = name
-        self._tests: str = self.__class__.__name__.lower()
+        self._tests: str = self.__class__.__name__.lower()[1:]
 
     def init(self) -> None:
         """Initializes tests content."""

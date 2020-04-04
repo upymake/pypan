@@ -52,7 +52,7 @@ confidence=
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
 
-disable=too-few-public-methods, unnecessary-pass, bad-continuation
+disable=too-few-public-methods, unnecessary-pass, bad-continuation, import-error
 
 [REPORTS]
 

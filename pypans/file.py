@@ -38,6 +38,7 @@ class Template(Enum):
     LICENSE: str = "LICENSE.md"
     MANIFEST: str = "MANIFEST.in"
     PYPIRC: str = ".pypirc"
+    RUNTIME: str = "runtime.txt"
     SETUP: str = "setup.py"
 
     @classmethod

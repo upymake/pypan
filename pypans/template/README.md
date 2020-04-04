@@ -13,7 +13,7 @@
 
 # <package>
 
-> Brief description for a tool.
+> A brief description for **<package>** tool.
 
 ## Tools
 
