@@ -35,7 +35,8 @@
 pip install <package>
 ✨ 🍰 ✨
 ```
-Then please run command below to start tool executor:
+
+After please run **<package>** tool from your shell:
 ```bash
 <package>
 ```
@@ -43,9 +44,9 @@ Then please run command below to start tool executor:
 ### Source code
 
 ```bash
+git clone path/to/github/repo.git
 python -m <package> --help
 ```
-
 
 ## Development notes
 

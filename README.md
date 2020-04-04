@@ -36,16 +36,23 @@ pip install pypans
 ✨ 🍰 ✨
 ```
 
+After please run **pypan** tool from your shell:
+```bash
+pypan
+```
+
 ### Source code
 
 ```bash
 git clone git@github.com:vyahello/pypans.git
 pip install -e .
+pypan
 ```
 
-Or using direct source:
+Or using direct release:
 ```bash
 pip install git+https://github.com/vyahello/pypans@0.0.1
+pypan
 ```
 
 ## Development notes
