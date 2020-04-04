@@ -1,7 +1,7 @@
 """Contains interfaces for package tools executor."""
 import click
 from termcolor import colored
-from pypans.project import User, Project
+from pypans.project import Project, User  # noqa: I100
 
 
 @click.command()
@@ -24,4 +24,4 @@ def easypan(start: bool) -> None:
 
 
 if __name__ == "__main__":
-    easypan()
+    easypan()  # pylint:disable=no-value-for-parameter

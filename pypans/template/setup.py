@@ -1,13 +1,14 @@
+# pylint:disable=import-error
 """Package setup entrypoint."""
 from typing import IO, Sequence
-from package import (
+from setuptools import find_packages as __find_packages, setup as __compose_package
+from package import (  # noqa: I100
     __author__ as __author,
     __doc__ as __full_doc,
     __email__ as __email,
     __name__ as __name,
     __version__ as __version,
 )
-from setuptools import find_packages as __find_packages, setup as __compose_package
 
 
 def __readme() -> str:

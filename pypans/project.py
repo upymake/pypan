@@ -1,66 +1,85 @@
+"""Contains interfaces for managing python project."""
 import os
 import site
 from abc import abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
 from punish.style import AbstractStyle
-from pypans.file import write_to_file, replace_content, File
+from pypans.file import Template, replace_content, write_to_file
 
 SITE_TEMPLATE: str = os.path.join(site.getsitepackages()[0], os.path.dirname(__file__), "template")
 NEW_LINE: str = "\n"
 
 
 class Package(AbstractStyle):
+    """Represents an abstract interface for a package."""
+
     @abstractmethod
     def init(self) -> None:
+        """Initializes a package content."""
         pass
 
 
 @dataclass
 class User(AbstractStyle):
+    """Represents an abstract interface for user."""
+
     name: str
     email: str
 
 
 class _Meta(AbstractStyle):
+    """Represents meta content builder."""
+
     def __init__(self, name: str, user: User) -> None:
         self._name = name
         self._user = user
 
     def build_analyser(self) -> None:
-        replace_content(File.ANALYSER.value, from_replace="<package>", to_replace=self._name)
+        """Builds analyser file."""
+        replace_content(Template.ANALYSER.value, from_replace="<package>", to_replace=self._name)
 
     def build_readme(self) -> None:
-        replace_content(File.README.value, from_replace="<package>", to_replace=self._name)
+        """Builds readme file."""
+        replace_content(Template.README.value, from_replace="<package>", to_replace=self._name)
         replace_content(
-            File.README.value, from_replace="<username>", to_replace="-".join(self._user.name.lower().split())
+            Template.README.value, from_replace="<username>", to_replace="-".join(self._user.name.lower().split())
         )
-        replace_content(File.README.value, from_replace="<email>", to_replace=self._user.email)
+        replace_content(Template.README.value, from_replace="<email>", to_replace=self._user.email)
 
     def build_license(self) -> None:
-        replace_content(File.LICENSE.value, from_replace="<year>", to_replace=str(datetime.now().year))
-        replace_content(File.LICENSE.value, from_replace="<package>", to_replace=self._name)
+        """Builds license file."""
+        replace_content(Template.LICENSE.value, from_replace="<year>", to_replace=str(datetime.now().year))
+        replace_content(Template.LICENSE.value, from_replace="<package>", to_replace=self._name)
 
     def build_packaging(self) -> None:
-        replace_content(File.CHANGELOG.value, from_replace="<date>", to_replace="{:%d.%m.%Y}".format(datetime.now()))
-        replace_content(File.MANIFEST.value, from_replace="<package>", to_replace=self._name)
-        replace_content(File.PYPIRC.value, from_replace="<username>", to_replace=self._user.name)
-        replace_content(File.SETUP.value, from_replace="package", to_replace=self._name)
+        """Builds packaging files."""
+        replace_content(
+            Template.CHANGELOG.value, from_replace="<date>", to_replace="{:%d.%m.%Y}".format(datetime.now())
+        )
+        replace_content(Template.MANIFEST.value, from_replace="<package>", to_replace=self._name)
+        replace_content(Template.PYPIRC.value, from_replace="<username>", to_replace=self._user.name)
+        replace_content(Template.SETUP.value, from_replace="package", to_replace=self._name)
 
     def build_pytest(self) -> None:
-        replace_content(File.PYTEST.value, from_replace="<package>", to_replace=self._name)
+        """Builds pytest file."""
+        replace_content(Template.PYTEST.value, from_replace="<package>", to_replace=self._name)
 
     def build_authors(self) -> None:
-        replace_content(File.AUTHORS.value, from_replace="<username>", to_replace=self._user.name)
-        replace_content(File.AUTHORS.value, from_replace="<email>", to_replace=self._user.email)
+        """Builds authors file."""
+        replace_content(Template.AUTHORS.value, from_replace="<username>", to_replace=self._user.name)
+        replace_content(Template.AUTHORS.value, from_replace="<email>", to_replace=self._user.email)
 
 
 class _Application(Package):
+    """Represents application content builder."""
+
     def __init__(self, name: str, user: User) -> None:
         self._name: str = name
         self._user: User = user
 
     def init(self) -> None:
+        """Initializes an application content."""
         os.mkdir(self._name)
         write_to_file(
             path=os.path.join(self._name, "__init__.py"),
@@ -72,6 +91,7 @@ class _Application(Package):
         )
 
     def make_as_tool(self) -> None:
+        """Creates executable file."""
         write_to_file(
             path=os.path.join(self._name, "__main__.py"),
             content=(
@@ -84,11 +104,14 @@ class _Application(Package):
 
 
 class _Tests(Package):
+    """Represents tests content builder."""
+
     def __init__(self, name: str) -> None:
         self._name: str = name
         self._tests: str = self.__class__.__name__.lower()
 
     def init(self) -> None:
+        """Initializes tests content."""
         os.mkdir(self._tests)
         write_to_file(
             path=os.path.join(self._tests, "__init__.py"),
@@ -96,6 +119,7 @@ class _Tests(Package):
         )
 
     def make_helpers(self) -> None:
+        """Creates tests helpers."""
         write_to_file(
             path=os.path.join(self._tests, "markers.py"),
             content=(
@@ -117,6 +141,8 @@ class _Tests(Package):
 
 
 class _Builder(AbstractStyle):
+    """Represents project builder."""
+
     def __init__(self, name: str, user: User) -> None:
         self._app: _Application = _Application(name, user)
         self._tests: _Tests = _Tests(name)
@@ -124,31 +150,39 @@ class _Builder(AbstractStyle):
 
     @property
     def app(self) -> _Application:
+        """Returns application builder."""
         return self._app
 
     @property
     def tests(self) -> _Tests:
+        """Returns tests builder."""
         return self._tests
 
     @property
     def meta(self) -> _Meta:
+        """Returns meta builder."""
         return self._meta
 
 
 class Project(AbstractStyle):
+    """Represents a project."""
+
     def __init__(self, name: str, user: User) -> None:
         self._builder: _Builder = _Builder(name, user)
 
     def build_package(self) -> None:
+        """Builds an application package."""
         self._builder.app.init()
         self._builder.app.make_as_tool()
 
     def build_tests(self) -> None:
+        """Builds tests package."""
         self._builder.tests.init()
         self._builder.tests.make_helpers()
 
     def build_meta(self) -> None:
-        File.templates_from(from_path=SITE_TEMPLATE)
+        """Builds meta files."""
+        Template.files_from(from_path=SITE_TEMPLATE)
         self._builder.meta.build_analyser()
         self._builder.meta.build_authors()
         self._builder.meta.build_license()

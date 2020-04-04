@@ -72,7 +72,7 @@ Project has Travis CI integration using [.travis.yml](.travis.yml) file thus cod
 
 To be able to run code analysis, please execute command below:
 ```bash
-➜ ./analyse-source-code.sh
+./analyse-source-code.sh
 ```
 ### Release notes
 
