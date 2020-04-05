@@ -29,6 +29,8 @@
 
 ## Usage
 
+![Usage](usage.gif)
+
 ### Quick start
 
 ```bash
