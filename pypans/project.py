@@ -45,26 +45,38 @@ class _Meta(AbstractStyle):
     def build_readme(self) -> None:
         """Builds readme file."""
         replace_content(Template.README.value, from_replace="<package>", to_replace=self._name)
-        replace_content(Template.README.value, from_replace="<username>", to_replace=self._user.name)
+        replace_content(
+            Template.README.value, from_replace="<username>", to_replace=self._user.name
+        )
         replace_content(Template.README.value, from_replace="<email>", to_replace=self._user.email)
 
     def build_license(self) -> None:
         """Builds license file."""
-        replace_content(Template.LICENSE.value, from_replace="<year>", to_replace=str(datetime.now().year))
-        replace_content(Template.LICENSE.value, from_replace="<username>", to_replace=self._user.name)
+        replace_content(
+            Template.LICENSE.value, from_replace="<year>", to_replace=str(datetime.now().year)
+        )
+        replace_content(
+            Template.LICENSE.value, from_replace="<username>", to_replace=self._user.name
+        )
 
     def build_packaging(self) -> None:
         """Builds packaging files."""
         replace_content(
-            Template.CHANGELOG.value, from_replace="<date>", to_replace="{:%d.%m.%Y}".format(datetime.now())
+            Template.CHANGELOG.value,
+            from_replace="<date>",
+            to_replace="{:%d.%m.%Y}".format(datetime.now()),
         )
         replace_content(Template.MANIFEST.value, from_replace="<package>", to_replace=self._name)
         replace_content(
-            Template.PYPIRC.value, from_replace="<username>", to_replace=self._user.name.lower().replace(" ", ".")
+            Template.PYPIRC.value,
+            from_replace="<username>",
+            to_replace=self._user.name.lower().replace(" ", "."),
         )
         replace_content(Template.SETUP.value, from_replace="tool", to_replace=self._name)
         replace_content(
-            Template.RUNTIME.value, from_replace="<version>", to_replace=".".join(map(str, sys.version_info[:3]))
+            Template.RUNTIME.value,
+            from_replace="<version>",
+            to_replace=".".join(map(str, sys.version_info[:3])),
         )
 
     def build_pytest(self) -> None:
@@ -73,7 +85,9 @@ class _Meta(AbstractStyle):
 
     def build_authors(self) -> None:
         """Builds authors file."""
-        replace_content(Template.AUTHORS.value, from_replace="<username>", to_replace=self._user.name)
+        replace_content(
+            Template.AUTHORS.value, from_replace="<username>", to_replace=self._user.name
+        )
         replace_content(Template.AUTHORS.value, from_replace="<email>", to_replace=self._user.email)
 
 
@@ -90,8 +104,8 @@ class _Application(Package):
         write_to_file(
             path=os.path.join(self._name, "__init__.py"),
             content=(
-                f'"""Package contains a set of interfaces to operate `{self._name}` application.""" {NEW_LINE * 2}'
-                f'__author__: str = "{self._user.name}"{NEW_LINE}__email__: str ='
+                f'"""Package contains a set of interfaces to operate `{self._name}` application."""'
+                f' {NEW_LINE * 2}__author__: str = "{self._user.name}"{NEW_LINE}__email__: str ='
                 f' "{self._user.email}"{NEW_LINE}__version__: str = "0.0.0"{NEW_LINE}'
             ),
         )
@@ -102,7 +116,8 @@ class _Application(Package):
             path=os.path.join(self._name, "__main__.py"),
             content=(
                 f'"""Represents executable entrypoint for `{self._name}` application."""'
-                f'{NEW_LINE * 3}def main() -> None:{NEW_LINE}    """Runs `{self._name}` application."""'
+                f'{NEW_LINE * 3}def main() -> None:{NEW_LINE}    """'
+                f'Runs `{self._name}` application."""'
                 f"{NEW_LINE * 2}    pass{NEW_LINE * 3}"
                 f'if __name__ == "__main__":{NEW_LINE}    pass{NEW_LINE}'
             ),
@@ -121,7 +136,8 @@ class _Tests(Package):
         os.mkdir(self._tests)
         write_to_file(
             path=os.path.join(self._tests, "__init__.py"),
-            content=f'"""Package contains a set of interfaces to test `{self._name}` application."""{NEW_LINE}',
+            content=f'"""Package contains a set of interfaces to test '
+            f'`{self._name}` application."""{NEW_LINE}',
         )
 
     def make_helpers(self) -> None:
@@ -142,7 +158,8 @@ class _Tests(Package):
         )
         write_to_file(
             path=os.path.join(self._tests, "test_sample.py"),
-            content=f"import pytest{NEW_LINE * 3}" f"def test_me() -> None:{NEW_LINE}    assert True{NEW_LINE}",
+            content=f"import pytest{NEW_LINE * 3}"
+            f"def test_me() -> None:{NEW_LINE}    assert True{NEW_LINE}",
         )
 
 
