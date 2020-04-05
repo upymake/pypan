@@ -1,6 +1,10 @@
 Versions
 ========
 
+0.0.2 (05.04.2020)
+========
+- Describe demo usage
+
 0.0.1 (05.04.2020)
 ========
 - Support colored user prompt
