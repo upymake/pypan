@@ -7,7 +7,7 @@ from pypans.file import Template
 from pypans.project import Project, User  # noqa: I100
 
 
-def _colored_output(string: str, color: str) -> int:
+def _write_as_colored(string: str, color: str) -> int:
     """Writes data into colored output.
 
     Returns number of characters to write.
@@ -48,7 +48,7 @@ class _Environment:
                 )
             )
         else:
-            _colored_output(string=f"Project setup with git is skipped for `{self._name}` project", color="red")
+            _write_as_colored(string=f">>> 🚨 Setup with git is skipped for `{self._name}` project 🚨", color="red")
 
     def install_requirements(self) -> None:
         """Installs project requirements."""
@@ -63,7 +63,9 @@ class _Environment:
             install_from(file=Template.REQUIREMENTS)
             install_from(file=Template.DEV_REQUIREMENTS)
         else:
-            _colored_output(string=f"Dependencies installation is skipped for `{self._name}` project", color="red")
+            _write_as_colored(
+                string=f">>> 🚨 Dependencies installation is skipped for `{self._name}` project 🚨", color="red"
+            )
 
 
 def __build_environment(name: str, user: User) -> None:
@@ -72,6 +74,8 @@ def __build_environment(name: str, user: User) -> None:
     environment.setup_project()
     environment.setup_git()
     environment.install_requirements()
+    _write_as_colored(string=">>>", color="green")
+    _write_as_colored(string=f">>> 🐍 Successfully created fresh `{name}` python project 🐍", color="magenta")
 
 
 @click.command()
@@ -82,6 +86,8 @@ def easypan(start: bool) -> None:
     Program allows to interactively compose fresh python project from template.
     """
     if start:
+        _write_as_colored(string=">>> 🥘 Welcome to `pypan` python project builder utility 🥘", color="green")
+        _write_as_colored(string=">>>", color="green")
         __build_environment(
             name=input(colored(">>> Please name your application (e.g bomber): ", "green")).lower().replace("-", "_"),
             user=User(
@@ -89,7 +95,6 @@ def easypan(start: bool) -> None:
                 email=input(colored(">>> Please enter your email (e.g user@gmail.com): ", "green")),
             ),
         )
-        _colored_output(string=f"🐍 Successfully created fresh python project 🐍", color="magenta")
     else:
         click.echo(click.get_current_context().get_help())
 

@@ -80,6 +80,7 @@ Distributed under the `MIT` license. See [license](LICENSE.md) for more informat
 You can reach out me at:
 * [<email>](<email>)
 * [https://github.com/<username>](https://github.com/<username>)
+* [https://www.linkedin.com/in/<username>](https://www.linkedin.com/in/<username>)
 
 ### Contributing
 1. clone the repository

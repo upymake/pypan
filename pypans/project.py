@@ -45,9 +45,7 @@ class _Meta(AbstractStyle):
     def build_readme(self) -> None:
         """Builds readme file."""
         replace_content(Template.README.value, from_replace="<package>", to_replace=self._name)
-        replace_content(
-            Template.README.value, from_replace="<username>", to_replace=".".join(self._user.name.lower().split())
-        )
+        replace_content(Template.README.value, from_replace="<username>", to_replace=self._user.name)
         replace_content(Template.README.value, from_replace="<email>", to_replace=self._user.email)
 
     def build_license(self) -> None:
@@ -62,7 +60,7 @@ class _Meta(AbstractStyle):
         )
         replace_content(Template.MANIFEST.value, from_replace="<package>", to_replace=self._name)
         replace_content(
-            Template.PYPIRC.value, from_replace="<username>", to_replace=".".join(self._user.name.lower().split())
+            Template.PYPIRC.value, from_replace="<username>", to_replace=self._user.name.lower().replace(" ", ".")
         )
         replace_content(Template.SETUP.value, from_replace="tool", to_replace=self._name)
         replace_content(
