@@ -47,7 +47,21 @@ After please run **<package>** tool from your shell:
 
 ```bash
 git clone path/to/github/repo.git
-python -m <package> --help
+pip install -e .
+<package>
+```
+
+Or using direct release:
+```bash
+pip install git+https://path/to/github/repo@0.0.1
+<package>
+```
+
+### Local debug
+
+```bash
+git clone path/to/github/repo.git
+python -m <package>
 ```
 
 ## Development notes

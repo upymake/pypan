@@ -57,6 +57,13 @@ pip install git+https://github.com/vyahello/pypans@0.0.1
 pypan
 ```
 
+### Local debug
+
+```bash
+git clone git@github.com:vyahello/pypans.git
+python -m pypans
+```
+
 ## Development notes
 
 ### Testing
