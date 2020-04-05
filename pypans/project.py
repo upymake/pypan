@@ -64,7 +64,7 @@ class _Meta(AbstractStyle):
         replace_content(
             Template.PYPIRC.value, from_replace="<username>", to_replace=".".join(self._user.name.lower().split())
         )
-        replace_content(Template.SETUP.value, from_replace="package", to_replace=self._name)
+        replace_content(Template.SETUP.value, from_replace="tool", to_replace=self._name)
         replace_content(
             Template.RUNTIME.value, from_replace="<version>", to_replace=".".join(map(str, sys.version_info[:3]))
         )

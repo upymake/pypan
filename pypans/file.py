@@ -2,7 +2,7 @@
 import os
 import shutil
 from enum import Enum
-from typing import IO
+from typing import Any, IO
 
 
 def write_to_file(path: str, content: str, mode: str = "a") -> None:
@@ -46,3 +46,7 @@ class Template(Enum):
         """Creates template files from given path."""
         for template in cls:  # type: Template
             shutil.copyfile(os.path.join(from_path, template.value), template.value)
+
+    def __str__(self) -> Any:
+        """Returns value of a template."""
+        return self.value

@@ -1,7 +1,7 @@
 """Package setup entrypoint."""
 from typing import IO, Sequence
 from setuptools import find_packages as __find_packages, setup as __compose_package
-from package import (
+from tool import (
     __author__ as __author,
     __doc__ as __full_doc,
     __email__ as __email,
@@ -53,5 +53,5 @@ if __name__ == "__main__":
             "Operating System :: OS Independent",
         ),
         python_requires=">=3.6",
-        entry_points={"console_scripts": ("package = package.__main__:main",)},
+        entry_points={"console_scripts": ("tool = tool.__main__:main",)},
     )
