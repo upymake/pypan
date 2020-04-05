@@ -63,6 +63,7 @@ pypan
 git clone git@github.com:vyahello/pypans.git
 python -m pypans
 ```
+**[⬆ back to top](#pypan)**
 
 ## Development notes
 
@@ -103,3 +104,5 @@ You can reach out me at:
 2. configure Git for the first time after cloning with your `name` and `email`
 3. `pip install -r requirements.txt` to install all project dependencies
 4. `pip install -r requirements-dev.txt` to install all development project dependencies
+
+**[⬆ back to top](#pypan)**

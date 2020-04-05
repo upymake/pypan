@@ -63,6 +63,7 @@ pip install git+https://path/to/github/repo@0.0.1
 git clone path/to/github/repo.git
 python -m <package>
 ```
+**[⬆ back to top](#<package>)**
 
 ## Development notes
 
@@ -103,3 +104,5 @@ You can reach out me at:
 2. configure Git for the first time after cloning with your `name` and `email`
 3. `pip install -r requirements.txt` to install all project dependencies
 4. `pip install -r requirements-dev.txt` to install all development project dependencies
+
+**[⬆ back to top](#<package>)**
