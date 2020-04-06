@@ -1,7 +1,12 @@
 Versions
 ========
 
-0.0.2 (05.04.2020)
+0.0.4 (06.04.2020)
+========
+- Use 100 lines of code
+- Support 'back to top' readme navigation
+
+0.0.3 (05.04.2020)
 ========
 - Specify local debug section
 
