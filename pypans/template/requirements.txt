@@ -1,5 +1,7 @@
 dataclasses
 enforce-pep8
+uyaml
+urequest
 setuptools
 wheel
 twine

@@ -1,4 +1,4 @@
 dataclasses==0.6.0
 termcolor==1.1.0
-enforce-pep8==0.0.1
+enforce-pep8==0.0.3
 click==7.1.1

@@ -3,6 +3,7 @@ import os
 import sys
 import click
 from termcolor import colored
+from punish.style import AbstractStyle
 from pypans.file import Template
 from pypans.project import Project, User  # noqa: I100
 
@@ -15,7 +16,7 @@ def _write_as_colored(string: str, color: str) -> int:
     return sys.stdout.write(f"{colored(string, color)}\n")
 
 
-class _Environment:
+class _Environment(AbstractStyle):
     """Representation of project environment."""
 
     def __init__(self, name: str, user: User) -> None:
