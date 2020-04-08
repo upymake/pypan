@@ -1,4 +1,5 @@
 pytest
+pytest-mock
 pytest-sugar
 pytest-clarity
 pytest-cov
