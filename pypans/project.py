@@ -72,11 +72,18 @@ class _Meta(AbstractStyle):
             from_replace="<username>",
             to_replace=self._user.name.lower().replace(" ", "."),
         )
-        replace_content(Template.SETUP.value, from_replace="tool", to_replace=self._name)
+        replace_content(Template.SETUP.value, from_replace="tooling", to_replace=self._name)
         replace_content(
             Template.RUNTIME.value,
             from_replace="<version>",
             to_replace=".".join(map(str, sys.version_info[:3])),
+        )
+        replace_content(
+            Template.PROCFILE.value, from_replace="<package>", to_replace=self._name,
+        )
+        write_to_file(
+            path=os.path.join(self._name, f"{self._name}.py"),
+            content=f"from {self._name} import app{NEW_LINE}",
         )
 
     def build_pytest(self) -> None:
@@ -106,7 +113,8 @@ class _Application(Package):
             content=(
                 f'"""Package contains a set of interfaces to operate `{self._name}` application."""'
                 f' {NEW_LINE * 2}__author__: str = "{self._user.name}"{NEW_LINE}__email__: str ='
-                f' "{self._user.email}"{NEW_LINE}__version__: str = "0.0.0"{NEW_LINE}'
+                f' "{self._user.email}"{NEW_LINE}__version__: str = "0.0.0"{NEW_LINE * 2}'
+                f"app = None{NEW_LINE}"
             ),
         )
 
@@ -119,7 +127,7 @@ class _Application(Package):
                 f'{NEW_LINE * 3}def main() -> None:{NEW_LINE}    """'
                 f'Runs `{self._name}` application."""'
                 f"{NEW_LINE * 2}    pass{NEW_LINE * 3}"
-                f'if __name__ == "__main__":{NEW_LINE}    pass{NEW_LINE}'
+                f'if __name__ == "__main__":{NEW_LINE}    main(){NEW_LINE}'
             ),
         )
 
@@ -145,6 +153,7 @@ class _Tests(Package):
         write_to_file(
             path=os.path.join(self._tests, "markers.py"),
             content=(
+                f"# flake8: noqa{NEW_LINE}"
                 f"import _pytest.mark{NEW_LINE}import pytest{NEW_LINE * 2}"
                 f"unit: _pytest.mark.MarkDecorator = pytest.mark.unit{NEW_LINE}"
             ),
@@ -152,13 +161,17 @@ class _Tests(Package):
         write_to_file(
             path=os.path.join(self._tests, "conftest.py"),
             content=(
+                f"# flake8: noqa{NEW_LINE}"
                 f"from _pytest.config.argparsing import Parser{NEW_LINE}"
                 f"from _pytest.fixtures import SubRequest{NEW_LINE}import pytest{NEW_LINE}"
             ),
         )
         write_to_file(
             path=os.path.join(self._tests, "test_sample.py"),
-            content=f"import pytest{NEW_LINE * 3}"
+            content=f"# flake8: noqa{NEW_LINE}"
+            f"import pytest{NEW_LINE}"
+            f"from tests.markers import unit{NEW_LINE * 2}"
+            f"pytestmark = unit{NEW_LINE * 3}"
             f"def test_me() -> None:{NEW_LINE}    assert True{NEW_LINE}",
         )
 

@@ -1,7 +1,7 @@
 """Package setup entrypoint."""
 from typing import IO, Sequence
 from setuptools import find_packages as __find_packages, setup as __compose_package
-from tool import (
+from tooling import (
     __author__ as __author,
     __doc__ as __full_doc,
     __email__ as __email,

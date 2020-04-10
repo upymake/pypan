@@ -39,6 +39,7 @@ class Template(Enum):
     MANIFEST: str = "MANIFEST.in"
     PYPIRC: str = ".pypirc"
     RUNTIME: str = "runtime.txt"
+    PROCFILE: str = "Procfile"
     SETUP: str = "setup.py"
 
     @classmethod
