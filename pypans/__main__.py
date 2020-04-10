@@ -1,6 +1,7 @@
 """Contains interfaces for package tools executor."""
 import os
 import sys
+import textwrap
 import click
 from termcolor import colored
 from punish.style import AbstractStyle
@@ -107,12 +108,25 @@ def __build_environment() -> None:
 
 @click.command()
 @click.option(
-    "--start", "-s", show_default=True, is_flag=True, help="Starts python project composer"
+    "--start",
+    show_default=True,
+    is_flag=True,
+    help="""
+    
+    Starts python project composer:\n
+      >>> Configure project packaging for `python`\n
+      >>> Configure testing environment with `pytest`\n
+      >>> Configure static code analysis and CI tools\n
+      >>> Configure readme and changelog\n
+      >>> Configure project requirements\n
+      >>> Configure `git` (optional)\n
+      >>> Install python dependencies (optional)\n
+    """,
 )
 def easypan(start: bool) -> None:
     """Runs `pypan` command line utility.
 
-    Program allows to interactively compose fresh python project from template.
+    Program allows to interactively compose python project template from the scratch.
     """
     if start:
         __build_environment()
