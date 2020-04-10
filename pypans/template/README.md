@@ -10,6 +10,10 @@
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE.md)
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
+[![Downloads](https://pepy.tech/badge/pypans)](https://pepy.tech/project/<package>)
+[![PyPI version shields.io](https://img.shields.io/pypi/v/<package>.svg)](https://pypi.python.org/pypi/<package>/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/<package>.svg)](https://pypi.python.org/pypi/<package>/)
+[![CodeFactor](https://www.codefactor.io/repository/github/<username>/<package>/badge)](https://www.codefactor.io/repository/github/<username>/<package>)
 
 # <package>
 
