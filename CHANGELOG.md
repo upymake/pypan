@@ -1,6 +1,14 @@
 Versions
 ========
 
+0.0.5 (10.04.202)
+========
+- Enhance pypan tool help
+- Introduce extra packaging files
+- Add pretty python interpreters to dev requirements
+- Support 'pytest-mock' plugin
+- Upgrade 'enforce-pep8' package
+
 0.0.4 (06.04.2020)
 ========
 - Use 100 lines of code
