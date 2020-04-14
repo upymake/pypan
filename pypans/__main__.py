@@ -16,7 +16,7 @@ def _write_as_colored(string: str, color: str) -> int:
     return sys.stdout.write(f"{colored(string, color)}\n")
 
 
-class _Environment(AbstractStyle):
+class __Environment(AbstractStyle):
     """Representation of project environment."""
 
     def __init__(self, name: str, user: User) -> None:
@@ -64,6 +64,13 @@ class _Environment(AbstractStyle):
 
         def install_from(file: Template) -> None:  # noqa: VNE002
             os.system(f"pip install -r {file}")
+            if file is Template.REQUIREMENTS:
+                os.system(f"pip freeze > {file}")
+            else:
+                os.system(
+                    "pip freeze | egrep "
+                    f"'pytest|pdbpp|python|pydoc|black|pylint|mypy|flake8|cov' > {file}"
+                )
 
         install: str = input(
             colored(
@@ -89,8 +96,8 @@ def __build_environment() -> None:
     )
     _write_as_colored(string=">>>", color="green")
     name: str = input(colored(">>> Please name your application (e.g bomber): ", "green"))
-    environment: _Environment = _Environment(
-        name,
+    environment: __Environment = __Environment(
+        name=name,
         user=User(
             name=input(colored(">>> Please enter your username (e.g John Udot): ", "green")),
             email=input(colored(">>> Please enter your email (e.g user@gmail.com): ", "green")),
