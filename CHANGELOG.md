@@ -1,7 +1,12 @@
 Versions
 ========
 
-0.0.5 (10.04.202)
+0.0.6 (14.04.2020)
+========
+- Save current installed python dependencies
+- Add PYPI badges
+
+0.0.5 (10.04.2020)
 ========
 - Enhance pypan tool help
 - Introduce extra packaging files
