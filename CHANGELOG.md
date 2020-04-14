@@ -1,6 +1,10 @@
 Versions
 ========
 
+0.0.7 (14.04.2020)
+========
+- Include Procfile into packaging
+
 0.0.6 (14.04.2020)
 ========
 - Save current installed python dependencies
