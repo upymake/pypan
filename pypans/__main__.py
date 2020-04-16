@@ -69,7 +69,7 @@ class __Environment(AbstractStyle):
             else:
                 os.system(
                     "pip freeze | egrep "
-                    f"'pytest|pdbpp|python|pydoc|black|pylint|mypy|flake8|cov' > {file}"
+                    f"'pytest|pdbpp|python|pydoc|black|pylint|mypy|flake8|cov|manifest' > {file}"
                 )
 
         install: str = input(

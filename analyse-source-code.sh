@@ -67,6 +67,14 @@ DOC
 }
 
 
+check-pymanifest() {
+:<<DOC
+    Runs unittests using "check-manifest" tool
+DOC
+    --entry-point-box "check-manifest" && check-manifest -v ./
+}
+
+
 main() {
 :<<DOC
     Runs "main" code analyser
@@ -78,8 +86,10 @@ DOC
       check-pylint && \
       check-flake && \
       check-docstrings && \
+      check-pymanifest && \
       check-unittests
     )
 }
+
 
 main
