@@ -1,6 +1,13 @@
 Versions
 ========
 
+0.0.8 (16.04.2020)
+========
+- Upgrade 'enforce-pep8' package
+- Ignore 'I100' flake8 rule
+- Describe additional meta data for packaging
+- Conform python class naming with forward dunder
+
 0.0.7 (14.04.2020)
 ========
 - Include Procfile into packaging
