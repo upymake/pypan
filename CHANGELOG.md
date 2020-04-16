@@ -1,6 +1,11 @@
 Versions
 ========
 
+0.0.9 (16.04.2020)
+========
+- Make analyser executable
+- Introduce 'check-manifest' tool
+
 0.0.8 (16.04.2020)
 ========
 - Upgrade 'enforce-pep8' package
