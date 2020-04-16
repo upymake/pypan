@@ -15,9 +15,9 @@ def _copy_site_files_here() -> None:
     """Copies all files from site packaging location into current root location."""
     Template.files_from(
         from_path=os.path.join(
-            site.getsitepackages()[0],
+            site.getsitepackages()[0],  # pylint:disable=no-member
             os.path.dirname(__file__),
-            "template",  # pylint:disable=no-member
+            "template",
         )
     )
 
