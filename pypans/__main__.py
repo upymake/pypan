@@ -34,10 +34,10 @@ class __Environment(AbstractStyle):
         """Sets up git for a project."""
 
         def prepare(to_repo: str) -> None:
-            os.system("git init")
-            os.system(f"git config --local user.name {self._user.name}")
-            os.system(f"git config --local user.email {self._user.email}")
-            os.system(f"git remote add origin {to_repo}")
+            os.system(command="git init")
+            os.system(command=f"git config --local user.name {self._user.name}")
+            os.system(command=f"git config --local user.email {self._user.email}")
+            os.system(command=f"git remote add origin {to_repo}")
 
         git: str = input(
             colored(
@@ -63,9 +63,9 @@ class __Environment(AbstractStyle):
         """Installs project requirements."""
 
         def install_from(file: Template) -> None:  # noqa: VNE002
-            os.system(f"pip install -r {file}")
+            os.system(command=f"pip install -r {file}")
             if file is Template.REQUIREMENTS:
-                os.system(f"pip freeze > {file}")
+                os.system(command=f"pip freeze > {file}")
             else:
                 os.system(
                     "pip freeze | egrep "

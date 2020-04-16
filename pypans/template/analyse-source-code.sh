@@ -3,7 +3,7 @@
 PACKAGE="<package>"
 
 
---entry-point-box() {
+pretty-printer-box() {
 :<<DOC
     Provides pretty-printer check box
 DOC
@@ -23,7 +23,7 @@ check-black() {
 :<<DOC
     Runs "black" code analyser
 DOC
-    --entry-point-box "black" && ( black --check ${PACKAGE} )
+    pretty-printer-box "black" && ( black --check ${PACKAGE} )
 }
 
 
@@ -31,7 +31,7 @@ check-flake() {
 :<<DOC
     Runs "flake8" code analysers
 DOC
-    --entry-point-box "flake" && ( flake8 ./ )
+    pretty-printer-box "flake" && ( flake8 ./ )
 }
 
 
@@ -39,7 +39,7 @@ check-pylint() {
 :<<DOC
     Runs "pylint" code analyser
 DOC
-    --entry-point-box "pylint" && ( find ${PACKAGE} -type f -name "*.py" | xargs pylint )
+    pretty-printer-box "pylint" && ( find ${PACKAGE} -type f -name "*.py" | xargs pylint )
 }
 
 
@@ -47,7 +47,7 @@ check-mypy() {
 :<<DOC
     Runs "mypy" code analyser
 DOC
-    --entry-point-box "mypy" && ( mypy --package "${PACKAGE}" )
+    pretty-printer-box "mypy" && ( mypy --package "${PACKAGE}" )
 }
 
 
@@ -55,7 +55,7 @@ check-docstrings() {
 :<<DOC
      Runs "pydocstyle" static documentation code style formatter
 DOC
-    --entry-point-box "pydocstyle" && ( pydocstyle --explain --count ${PACKAGE} )
+    pretty-printer-box "pydocstyle" && ( pydocstyle --explain --count ${PACKAGE} )
 }
 
 
@@ -63,7 +63,7 @@ check-unittests() {
 :<<DOC
     Runs unittests using "pytest" framework
 DOC
-    --entry-point-box "unitests" && pytest
+    pretty-printer-box "unitests" && pytest
 }
 
 
@@ -71,7 +71,7 @@ check-pymanifest() {
 :<<DOC
     Runs unittests using "check-manifest" tool
 DOC
-    --entry-point-box "check-manifest" && check-manifest -v ./
+    pretty-printer-box "check-manifest" && check-manifest -v ./
 }
 
 

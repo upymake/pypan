@@ -22,5 +22,6 @@ flake8-print
 flake8-eradicate
 flake8-builtins
 flake8-pytest-style
+check-manifest
 coverage
 coveralls

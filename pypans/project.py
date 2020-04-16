@@ -49,6 +49,7 @@ class _Meta(AbstractStyle):
     def build_analyser(self) -> None:
         """Builds analyser file."""
         replace_content(Template.ANALYSER.value, from_replace="<package>", to_replace=self._name)
+        os.system(command=f"chmod a+x {Template.ANALYSER}")
 
     def build_readme(self) -> None:
         """Builds readme file."""
