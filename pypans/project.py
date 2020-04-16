@@ -8,10 +8,18 @@ from datetime import datetime
 from punish.style import AbstractStyle
 from pypans.file import Template, replace_content, write_to_file
 
-SITE_TEMPLATE: str = os.path.join(
-    site.getsitepackages()[0], os.path.dirname(__file__), "template"  # pylint:disable=no-member
-)
 NEW_LINE: str = "\n"
+
+
+def _copy_site_files_here() -> None:
+    """Copies all files from site packaging location into current root location."""
+    Template.files_from(
+        from_path=os.path.join(
+            site.getsitepackages()[0],
+            os.path.dirname(__file__),
+            "template",  # pylint:disable=no-member
+        )
+    )
 
 
 class Package(AbstractStyle):
@@ -82,8 +90,10 @@ class _Meta(AbstractStyle):
             Template.PROCFILE.value, from_replace="<package>", to_replace=self._name,
         )
         write_to_file(
-            path=os.path.join(self._name, f"{self._name}.py"),
-            content=f"from {self._name} import app{NEW_LINE}",
+            path=f"{self._name}.py",
+            content=f"# flake8: noqa{NEW_LINE}"
+            f'"""Module contains entrypoint interfaces for an application."""{NEW_LINE * 2}'
+            f"from {self._name} import app{NEW_LINE}",
         )
 
     def build_pytest(self) -> None:
@@ -113,7 +123,10 @@ class _Application(Package):
             content=(
                 f'"""Package contains a set of interfaces to operate `{self._name}` application."""'
                 f' {NEW_LINE * 2}__author__: str = "{self._user.name}"{NEW_LINE}__email__: str ='
-                f' "{self._user.email}"{NEW_LINE}__version__: str = "0.0.0"{NEW_LINE * 2}'
+                f' "{self._user.email}"{NEW_LINE}__license__: str = "MIT"{NEW_LINE}'
+                f'__copyright__: str = f"Copyright '
+                f'{datetime.now().year}, {{__author__}}"{NEW_LINE}'
+                f'__version__: str = "0.0.0"{NEW_LINE * 2}'
                 f"app = None{NEW_LINE}"
             ),
         )
@@ -218,7 +231,7 @@ class Project(AbstractStyle):
 
     def build_meta(self) -> None:
         """Builds meta files."""
-        Template.files_from(from_path=SITE_TEMPLATE)
+        _copy_site_files_here()
         self._builder.meta.build_analyser()
         self._builder.meta.build_authors()
         self._builder.meta.build_license()
