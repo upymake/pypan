@@ -12,6 +12,7 @@ flake8==3.7.9
 flake8-comprehensions==3.2.2
 flake8-typing-imports==1.9.0
 flake8-import-order==0.18.1
+flake8-annotations==2.1.0
 flake8-annotations-complexity==0.0.4
 flake8-functions==0.0.4
 flake8-variables-names==0.0.3
