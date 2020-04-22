@@ -1,6 +1,10 @@
 Versions
 ========
 
+0.0.10 (22.04.2020)
+========
+- Add 'flake8-printf-formatting' package
+
 0.0.9 (16.04.2020)
 ========
 - Make analyser executable
