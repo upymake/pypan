@@ -9,7 +9,7 @@
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE.md)
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
-[![CodeFactor](https://www.codefactor.io/repository/github/vyahello/pypan/badge)](https://www.codefactor.io/repository/github/vyahello/pypan)
+[![CodeFactor](https://www.codefactor.io/repository/github/upymake/pypan/badge)](https://www.codefactor.io/repository/github/upymake/pypan)
 [![Downloads](https://pepy.tech/badge/pypans)](https://pepy.tech/project/pypans)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/pypans.svg)](https://pypi.python.org/pypi/pypans/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/pypans.svg)](https://pypi.python.org/pypi/pypans/)
