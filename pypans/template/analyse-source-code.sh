@@ -89,6 +89,7 @@ DOC
       check-pymanifest && \
       check-unittests
     )
+    return 0
 }
 
 main
