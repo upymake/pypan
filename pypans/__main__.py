@@ -8,12 +8,21 @@ from pypans.file import Template
 from pypans.project import Line, Project, User  # noqa: I100
 
 
-def _write_as_colored(string: str, color: str) -> int:
-    """Writes data into colored output.
+class _Output(AbstractStyle):
+    """A command line output."""
 
-    Returns number of characters to write.
-    """
-    return sys.stdout.write(f"{colored(string, color)}{Line.NEW.value}")
+    def __init__(self, color: str) -> None:
+        self._color: str = color
+
+    def write(self, string: str) -> int:
+        """Writes data into colored output.
+
+        Args:
+            string (str): given string.
+
+        Returns number of characters to write.
+        """
+        return sys.stdout.write(f"{colored(string, self._color)}{Line.NEW.value}")
 
 
 class __Environment(AbstractStyle):
@@ -23,6 +32,7 @@ class __Environment(AbstractStyle):
         self._name = name
         self._user = user
         self._project: Project = Project(name, user)
+        self.__red_out: _Output = _Output(color="red")
 
     def setup_project(self) -> None:
         """Builds given project."""
@@ -55,8 +65,8 @@ class __Environment(AbstractStyle):
                 )
             )
         else:
-            _write_as_colored(
-                string=f">>> 🚨 Setup with git is skipped for `{self._name}` project 🚨", color="red"
+            self.__red_out.write(
+                string=f">>> 🚨 Setup with git is skipped for `{self._name}` project 🚨",
             )
 
     def install_requirements(self) -> None:
@@ -66,11 +76,13 @@ class __Environment(AbstractStyle):
             os.system(command=f"pip install -r {file}")
             if file is Template.REQUIREMENTS:
                 os.system(command=f"pip freeze > {file}")
-            else:
+            elif file is Template.DEV_REQUIREMENTS:
                 os.system(
                     "pip freeze | egrep "
                     f"'pytest|pdbpp|python|pydoc|black|pylint|mypy|flake8|cov|manifest' > {file}"
                 )
+            else:
+                raise ValueError(f"'{file}' template is not supported!")
 
         install: str = input(
             colored(
@@ -83,18 +95,16 @@ class __Environment(AbstractStyle):
             install_from(file=Template.REQUIREMENTS)
             install_from(file=Template.DEV_REQUIREMENTS)
         else:
-            _write_as_colored(
+            self.__red_out.write(
                 string=f">>> 🚨 Dependencies installation is skipped for `{self._name}` project 🚨",
-                color="red",
             )
 
 
 def __build_environment() -> None:
     """Builds fully-fledged environment."""
-    _write_as_colored(
-        string=">>> 🥘 Welcome to `pypan` python project builder utility 🥘", color="green"
-    )
-    _write_as_colored(string=">>>", color="green")
+    green_output: _Output = _Output(color="green")
+    green_output.write(string=">>> 🥘 Welcome to `pypan` python project builder utility 🥘",)
+    green_output.write(string=">>>")
     name: str = input(colored(">>> Please name your application (e.g bomber): ", "green"))
     environment: __Environment = __Environment(
         name=name,
@@ -106,9 +116,9 @@ def __build_environment() -> None:
     environment.setup_project()
     environment.setup_git()
     environment.install_requirements()
-    _write_as_colored(string=">>>", color="green")
-    _write_as_colored(
-        string=f">>> 🐍 Successfully created fresh `{name}` python project 🐍", color="magenta"
+    green_output.write(string=">>>")
+    _Output(color="magenta").write(
+        string=f">>> 🐍 Successfully created fresh `{name}` python project 🐍"
     )
 
 
