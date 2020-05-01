@@ -5,10 +5,23 @@ import sys
 from abc import abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
 from punish.style import AbstractStyle
 from pypans.file import Template, replace_content, write_to_file
 
-NEW_LINE: str = "\n"
+
+class Line(Enum):
+    """Represents string line."""
+
+    NEW: str = "\n"
+
+    def by_(self, times: int) -> str:
+        """Multiplies line by given number.
+
+        Args:
+            times (int): a multiplier number
+        """
+        return self.value * times
 
 
 def _copy_site_files_here() -> None:
@@ -92,9 +105,9 @@ class _Meta(AbstractStyle):
         )
         write_to_file(
             path=f"{self._name}.py",
-            content=f"# flake8: noqa{NEW_LINE}"
-            f'"""Module contains entrypoint interfaces for an application."""{NEW_LINE * 2}'
-            f"from {self._name} import app{NEW_LINE}",
+            content=f"# flake8: noqa{Line.NEW.value}"
+            f'"""Module contains entrypoint interfaces for an application."""{Line.NEW.by_(2)}'
+            f"from {self._name} import app{Line.NEW.value}",
         )
 
     def build_pytest(self) -> None:
@@ -123,12 +136,13 @@ class _Application(Package):
             path=os.path.join(self._name, "__init__.py"),
             content=(
                 f'"""Package contains a set of interfaces to operate `{self._name}` application."""'
-                f' {NEW_LINE * 2}__author__: str = "{self._user.name}"{NEW_LINE}__email__: str ='
-                f' "{self._user.email}"{NEW_LINE}__license__: str = "MIT"{NEW_LINE}'
+                f" {Line.NEW.by_(2)}__author__: str = "
+                f'"{self._user.name}"{Line.NEW.value}__email__: str ='
+                f' "{self._user.email}"{Line.NEW.value}__license__: str = "MIT"{Line.NEW.value}'
                 f'__copyright__: str = f"Copyright '
-                f'{datetime.now().year}, {{__author__}}"{NEW_LINE}'
-                f'__version__: str = "0.0.0"{NEW_LINE * 2}'
-                f"app = None{NEW_LINE}"
+                f'{datetime.now().year}, {{__author__}}"{Line.NEW.value}'
+                f'__version__: str = "0.0.0"{Line.NEW.by_(2)}'
+                f"app = None{Line.NEW.value}"
             ),
         )
 
@@ -138,10 +152,10 @@ class _Application(Package):
             path=os.path.join(self._name, "__main__.py"),
             content=(
                 f'"""Represents executable entrypoint for `{self._name}` application."""'
-                f'{NEW_LINE * 3}def main() -> None:{NEW_LINE}    """'
+                f'{Line.NEW.by_(3)}def main() -> None:{Line.NEW.value}    """'
                 f'Runs `{self._name}` application."""'
-                f"{NEW_LINE * 2}    pass{NEW_LINE * 3}"
-                f'if __name__ == "__main__":{NEW_LINE}    main(){NEW_LINE}'
+                f"{Line.NEW.by_(2)}    pass{Line.NEW.by_(3)}"
+                f'if __name__ == "__main__":{Line.NEW.value}    main(){Line.NEW.value}'
             ),
         )
 
@@ -159,7 +173,7 @@ class _Tests(Package):
         write_to_file(
             path=os.path.join(self._tests, "__init__.py"),
             content=f'"""Package contains a set of interfaces to test '
-            f'`{self._name}` application."""{NEW_LINE}',
+            f'`{self._name}` application."""{Line.NEW.value}',
         )
 
     def make_helpers(self) -> None:
@@ -167,26 +181,27 @@ class _Tests(Package):
         write_to_file(
             path=os.path.join(self._tests, "markers.py"),
             content=(
-                f"# flake8: noqa{NEW_LINE}"
-                f"import _pytest.mark{NEW_LINE}import pytest{NEW_LINE * 2}"
-                f"unit: _pytest.mark.MarkDecorator = pytest.mark.unit{NEW_LINE}"
+                f"# flake8: noqa{Line.NEW.value}"
+                f"import _pytest.mark{Line.NEW.value}import pytest{Line.NEW.by_(2)}"
+                f"unit: _pytest.mark.MarkDecorator = pytest.mark.unit{Line.NEW.value}"
             ),
         )
         write_to_file(
             path=os.path.join(self._tests, "conftest.py"),
             content=(
-                f"# flake8: noqa{NEW_LINE}"
-                f"from _pytest.config.argparsing import Parser{NEW_LINE}"
-                f"from _pytest.fixtures import SubRequest{NEW_LINE}import pytest{NEW_LINE}"
+                f"# flake8: noqa{Line.NEW.value}"
+                f"from _pytest.config.argparsing import Parser{Line.NEW.value}"
+                f"from _pytest.fixtures import "
+                f"SubRequest{Line.NEW.value}import pytest{Line.NEW.value}"
             ),
         )
         write_to_file(
             path=os.path.join(self._tests, "test_sample.py"),
-            content=f"# flake8: noqa{NEW_LINE}"
-            f"import pytest{NEW_LINE}"
-            f"from tests.markers import unit{NEW_LINE * 2}"
-            f"pytestmark = unit{NEW_LINE * 3}"
-            f"def test_me() -> None:{NEW_LINE}    assert True{NEW_LINE}",
+            content=f"# flake8: noqa{Line.NEW.value}"
+            f"import pytest{Line.NEW.value}"
+            f"from tests.markers import unit{Line.NEW.by_(2)}"
+            f"pytestmark = unit{Line.NEW.by_(3)}"
+            f"def test_me() -> None:{Line.NEW.value}    assert True{Line.NEW.value}",
         )
 
 

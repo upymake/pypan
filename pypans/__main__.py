@@ -5,7 +5,7 @@ import click
 from termcolor import colored
 from punish.style import AbstractStyle
 from pypans.file import Template
-from pypans.project import NEW_LINE, Project, User  # noqa: I100
+from pypans.project import Line, Project, User  # noqa: I100
 
 
 def _write_as_colored(string: str, color: str) -> int:
@@ -13,7 +13,7 @@ def _write_as_colored(string: str, color: str) -> int:
 
     Returns number of characters to write.
     """
-    return sys.stdout.write(f"{colored(string, color)}{NEW_LINE}")
+    return sys.stdout.write(f"{colored(string, color)}{Line.NEW.value}")
 
 
 class __Environment(AbstractStyle):
@@ -119,14 +119,14 @@ def __build_environment() -> None:
     is_flag=True,
     help=f"""
 
-    Starts python project composer:{NEW_LINE}
-      >>> Configure project packaging for `python`{NEW_LINE}
-      >>> Configure testing environment with `pytest`{NEW_LINE}
-      >>> Configure static code analysis and CI tools{NEW_LINE}
-      >>> Configure readme and changelog{NEW_LINE}
-      >>> Configure project requirements{NEW_LINE}
-      >>> Configure `git` (optional){NEW_LINE}
-      >>> Install python dependencies (optional){NEW_LINE}
+    Starts python project composer:{Line.NEW.value}
+      >>> Configure project packaging for `python`{Line.NEW.value}
+      >>> Configure testing environment with `pytest`{Line.NEW.value}
+      >>> Configure static code analysis and CI tools{Line.NEW.value}
+      >>> Configure readme and changelog{Line.NEW.value}
+      >>> Configure project requirements{Line.NEW.value}
+      >>> Configure `git` (optional){Line.NEW.value}
+      >>> Install python dependencies (optional){Line.NEW.value}
     """,
 )
 def easypan(start: bool) -> None:
