@@ -1,6 +1,17 @@
 Versions
 ========
 
+0.0.12
+========
+_Release date: 10.05.2020_
+
+- Introduce github.io pages configuration file
+- Split supported python versions with comma
+- Set theme jekyll-theme-cayman
+- Implement colored output
+- Implement line multiplier
+- Return success for code analysis tool
+
 0.0.11
 ========
 
