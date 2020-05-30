@@ -5,3 +5,4 @@ urequest
 setuptools
 wheel
 twine
+attrs

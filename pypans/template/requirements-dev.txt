@@ -27,3 +27,4 @@ flake8-printf-formatting
 check-manifest
 coverage
 coveralls
+interrogate

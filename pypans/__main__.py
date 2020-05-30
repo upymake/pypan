@@ -78,8 +78,8 @@ class __Environment(AbstractStyle):
                 os.system(command=f"pip freeze > {file}")
             elif file is Template.DEV_REQUIREMENTS:
                 os.system(
-                    "pip freeze | egrep "
-                    f"'pytest|pdbpp|python|pydoc|black|pylint|mypy|flake8|cov|manifest' > {file}"
+                    "pip freeze | egrep 'pytest|pdbpp|python|pydoc|"
+                    f"black|pylint|mypy|flake8|cov|manifest|gate' > {file}"
                 )
             else:
                 raise ValueError(f"'{file}' template is not supported!")

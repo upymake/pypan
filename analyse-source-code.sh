@@ -56,6 +56,7 @@ check-docstrings() {
      Runs "pydocstyle" static documentation code style formatter
 DOC
     pretty-printer-box "pydocstyle" && ( pydocstyle --explain --count ${PACKAGE} )
+    pretty-printer-box "interrogate" && interrogate -vv ${PACKAGE}
 }
 
 
