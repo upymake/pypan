@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
+# specifies a set of variables to declare files to be used for code assessment
 PACKAGE="pypans"
+
+# specifies a set of variables to declare CLI output color
+FAILED_OUT="\033[0;31m"
+PASSED_OUT="\033[0;32m"
+NONE_OUT="\033[0m"
 
 
 pretty-printer-box() {
@@ -76,6 +82,19 @@ DOC
 }
 
 
+is-passed() {
+:<<DOC
+    Checks if code assessment is passed
+DOC
+    if [[ $? -ne 0 ]]; then
+      echo -e "${FAILED_OUT}Code assessment is failed, please fix errors!${NONE_OUT}"
+      exit 100
+    else
+      echo -e "${PASSED_OUT}Congratulations, code assessment is passed!${NONE_OUT}"
+    fi
+}
+
+
 main() {
 :<<DOC
     Runs "main" code analyser
@@ -88,9 +107,9 @@ DOC
       check-flake && \
       check-docstrings && \
       check-pymanifest && \
-      check-unittests
+      check-unittests && \
+      is-passed
     )
-    return 0
 }
 
 
