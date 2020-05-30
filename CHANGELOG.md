@@ -1,8 +1,16 @@
 Versions
 ========
 
+0.0.13
+========
+
+_Release date: 30.05.2020_
+
+- Integrate interrogate docstring tool
+
 0.0.12
 ========
+
 _Release date: 10.05.2020_
 
 - Introduce github.io pages configuration file
