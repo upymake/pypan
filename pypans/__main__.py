@@ -1,11 +1,23 @@
 """Contains interfaces for package tools executor."""
 import os
 import sys
+from enum import Enum
 import click
 from termcolor import colored
 from punish.style import AbstractStyle
 from pypans.file import Template
 from pypans.project import Line, Project, User  # noqa: I100
+
+
+class _Emoji(Enum):
+    """The class represents `emoji` item."""
+    SIREN: str = '🚨'
+    PAN: str = '🥘'
+    SNAKE: str = '🐍'
+
+    def __str__(self) -> str:
+        """Returns emoji value."""
+        return self.value
 
 
 class _Output(AbstractStyle):
@@ -22,7 +34,7 @@ class _Output(AbstractStyle):
 
         Returns number of characters to write.
         """
-        return sys.stdout.write(f"{colored(string, self._color)}{Line.NEW.value}")
+        return sys.stdout.write(f"{colored(string, self._color)}{Line.NEW}")
 
 
 class __Environment(AbstractStyle):
@@ -66,7 +78,7 @@ class __Environment(AbstractStyle):
             )
         else:
             self.__red_out.write(
-                string=f">>> 🚨 Setup with git is skipped for `{self._name}` project 🚨",
+                string=f">>> {_Emoji.SIREN} Setup with git is skipped for `{self._name}` project {_Emoji.SIREN}",
             )
 
     def install_requirements(self) -> None:
@@ -96,14 +108,14 @@ class __Environment(AbstractStyle):
             install_from(file=Template.DEV_REQUIREMENTS)
         else:
             self.__red_out.write(
-                string=f">>> 🚨 Dependencies installation is skipped for `{self._name}` project 🚨",
+                string=f">>> {_Emoji.SIREN} Dependencies installation is skipped for `{self._name}` project {_Emoji.SIREN}",
             )
 
 
 def __build_environment() -> None:
     """Builds fully-fledged environment."""
     green_output: _Output = _Output(color="green")
-    green_output.write(string=">>> 🥘 Welcome to `pypan` python project builder utility 🥘",)
+    green_output.write(string=f">>> {_Emoji.PAN} Welcome to `pypan` python project builder utility {_Emoji.PAN}",)
     green_output.write(string=">>>")
     name: str = input(colored(">>> Please name your application (e.g bomber): ", "green"))
     environment: __Environment = __Environment(
@@ -118,7 +130,7 @@ def __build_environment() -> None:
     environment.install_requirements()
     green_output.write(string=">>>")
     _Output(color="magenta").write(
-        string=f">>> 🐍 Successfully created fresh `{name}` python project 🐍"
+        string=f">>>  {_Emoji.SNAKE} Successfully created fresh `{name}` python project  {_Emoji.SNAKE}"
     )
 
 
@@ -129,14 +141,14 @@ def __build_environment() -> None:
     is_flag=True,
     help=f"""
 
-    Starts python project composer:{Line.NEW.value}
-      >>> Configure project packaging for `python`{Line.NEW.value}
-      >>> Configure testing environment with `pytest`{Line.NEW.value}
-      >>> Configure static code analysis and CI tools{Line.NEW.value}
-      >>> Configure readme and changelog{Line.NEW.value}
-      >>> Configure project requirements{Line.NEW.value}
-      >>> Configure `git` (optional){Line.NEW.value}
-      >>> Install python dependencies (optional){Line.NEW.value}
+    Starts python project composer:{Line.NEW}
+      >>> Configure project packaging for `python`{Line.NEW}
+      >>> Configure testing environment with `pytest`{Line.NEW}
+      >>> Configure static code analysis and CI tools{Line.NEW}
+      >>> Configure readme and changelog{Line.NEW}
+      >>> Configure project requirements{Line.NEW}
+      >>> Configure `git` (optional){Line.NEW}
+      >>> Install python dependencies (optional){Line.NEW}
     """,
 )
 def easypan(start: bool) -> None:
