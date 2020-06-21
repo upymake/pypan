@@ -11,9 +11,10 @@ from pypans.project import Line, Project, User  # noqa: I100
 
 class _Emoji(Enum):
     """The class represents `emoji` item."""
-    SIREN: str = '🚨'
-    PAN: str = '🥘'
-    SNAKE: str = '🐍'
+
+    SIREN: str = "🚨"
+    PAN: str = "🥘"
+    SNAKE: str = "🐍"
 
     def __str__(self) -> str:
         """Returns emoji value."""
@@ -78,7 +79,10 @@ class __Environment(AbstractStyle):
             )
         else:
             self.__red_out.write(
-                string=f">>> {_Emoji.SIREN} Setup with git is skipped for `{self._name}` project {_Emoji.SIREN}",
+                string=(
+                    f">>> {_Emoji.SIREN} Setup with git is skipped for "
+                    f"`{self._name}` project {_Emoji.SIREN}"
+                )
             )
 
     def install_requirements(self) -> None:
@@ -108,14 +112,19 @@ class __Environment(AbstractStyle):
             install_from(file=Template.DEV_REQUIREMENTS)
         else:
             self.__red_out.write(
-                string=f">>> {_Emoji.SIREN} Dependencies installation is skipped for `{self._name}` project {_Emoji.SIREN}",
+                string=(
+                    f">>> {_Emoji.SIREN} Dependencies installation is skipped"
+                    f" for `{self._name}` project {_Emoji.SIREN}"
+                )
             )
 
 
 def __build_environment() -> None:
     """Builds fully-fledged environment."""
     green_output: _Output = _Output(color="green")
-    green_output.write(string=f">>> {_Emoji.PAN} Welcome to `pypan` python project builder utility {_Emoji.PAN}",)
+    green_output.write(
+        string=f">>> {_Emoji.PAN} Welcome to `pypan` python project builder utility {_Emoji.PAN}",
+    )
     green_output.write(string=">>>")
     name: str = input(colored(">>> Please name your application (e.g bomber): ", "green"))
     environment: __Environment = __Environment(
@@ -130,7 +139,10 @@ def __build_environment() -> None:
     environment.install_requirements()
     green_output.write(string=">>>")
     _Output(color="magenta").write(
-        string=f">>>  {_Emoji.SNAKE} Successfully created fresh `{name}` python project  {_Emoji.SNAKE}"
+        string=(
+            f">>>  {_Emoji.SNAKE} Successfully created fresh "
+            f"`{name}` python project  {_Emoji.SNAKE}"
+        )
     )
 
 

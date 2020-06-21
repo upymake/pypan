@@ -71,9 +71,7 @@ class _Meta(AbstractStyle):
     def build_readme(self) -> None:
         """Builds readme file."""
         replace_content(str(Template.README), from_replace="<package>", to_replace=self._name)
-        replace_content(
-            str(Template.README), from_replace="<username>", to_replace=self._user.name
-        )
+        replace_content(str(Template.README), from_replace="<username>", to_replace=self._user.name)
         replace_content(str(Template.README), from_replace="<email>", to_replace=self._user.email)
 
     def build_license(self) -> None:
@@ -146,6 +144,7 @@ class _Application(Package):
                 f'__copyright__: str = f"Copyright '
                 f'{datetime.now().year}, {{__author__}}"{Line.NEW}'
                 f'__version__: str = "0.0.0"{Line.NEW.by_(2)}'
+                f"__all__: tuple = (){Line.NEW.by_(2)}"
                 f"app = None{Line.NEW}"
             ),
         )
