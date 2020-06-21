@@ -23,6 +23,10 @@ class Line(Enum):
         """
         return self.value * times
 
+    def __str__(self) -> str:
+        """Returns line value."""
+        return self.value
+
 
 def _copy_site_files_here() -> None:
     """Copies all files from site packaging location into current root location."""
@@ -61,65 +65,65 @@ class _Meta(AbstractStyle):
 
     def build_analyser(self) -> None:
         """Builds analyser file."""
-        replace_content(Template.ANALYSER.value, from_replace="<package>", to_replace=self._name)
+        replace_content(str(Template.ANALYSER), from_replace="<package>", to_replace=self._name)
         os.system(command=f"chmod a+x {Template.ANALYSER}")
 
     def build_readme(self) -> None:
         """Builds readme file."""
-        replace_content(Template.README.value, from_replace="<package>", to_replace=self._name)
+        replace_content(str(Template.README), from_replace="<package>", to_replace=self._name)
         replace_content(
-            Template.README.value, from_replace="<username>", to_replace=self._user.name
+            str(Template.README), from_replace="<username>", to_replace=self._user.name
         )
-        replace_content(Template.README.value, from_replace="<email>", to_replace=self._user.email)
+        replace_content(str(Template.README), from_replace="<email>", to_replace=self._user.email)
 
     def build_license(self) -> None:
         """Builds license file."""
         replace_content(
-            Template.LICENSE.value, from_replace="<year>", to_replace=str(datetime.now().year)
+            str(Template.LICENSE), from_replace="<year>", to_replace=str(datetime.now().year)
         )
         replace_content(
-            Template.LICENSE.value, from_replace="<username>", to_replace=self._user.name
+            str(Template.LICENSE), from_replace="<username>", to_replace=self._user.name
         )
 
     def build_packaging(self) -> None:
         """Builds packaging files."""
         replace_content(
-            Template.CHANGELOG.value,
+            str(Template.CHANGELOG),
             from_replace="<date>",
             to_replace="{:%d.%m.%Y}".format(datetime.now()),
         )
-        replace_content(Template.MANIFEST.value, from_replace="<package>", to_replace=self._name)
+        replace_content(str(Template.MANIFEST), from_replace="<package>", to_replace=self._name)
         replace_content(
-            Template.PYPIRC.value,
+            str(Template.PYPIRC),
             from_replace="<username>",
             to_replace=self._user.name.lower().replace(" ", "."),
         )
-        replace_content(Template.SETUP.value, from_replace="tooling", to_replace=self._name)
+        replace_content(str(Template.SETUP), from_replace="tooling", to_replace=self._name)
         replace_content(
-            Template.RUNTIME.value,
+            str(Template.RUNTIME),
             from_replace="<version>",
             to_replace=".".join(map(str, sys.version_info[:3])),
         )
         replace_content(
-            Template.PROCFILE.value, from_replace="<package>", to_replace=self._name,
+            str(Template.PROCFILE), from_replace="<package>", to_replace=self._name,
         )
         write_to_file(
             path=f"{self._name}.py",
-            content=f"# flake8: noqa{Line.NEW.value}"
+            content=f"# flake8: noqa{Line.NEW}"
             f'"""Module contains entrypoint interfaces for an application."""{Line.NEW.by_(2)}'
-            f"from {self._name} import app{Line.NEW.value}",
+            f"from {self._name} import app{Line.NEW}",
         )
 
     def build_pytest(self) -> None:
         """Builds pytest file."""
-        replace_content(Template.PYTEST.value, from_replace="<package>", to_replace=self._name)
+        replace_content(str(Template.PYTEST), from_replace="<package>", to_replace=self._name)
 
     def build_authors(self) -> None:
         """Builds authors file."""
         replace_content(
-            Template.AUTHORS.value, from_replace="<username>", to_replace=self._user.name
+            str(Template.AUTHORS), from_replace="<username>", to_replace=self._user.name
         )
-        replace_content(Template.AUTHORS.value, from_replace="<email>", to_replace=self._user.email)
+        replace_content(str(Template.AUTHORS), from_replace="<email>", to_replace=self._user.email)
 
 
 class _Application(Package):
@@ -137,12 +141,12 @@ class _Application(Package):
             content=(
                 f'"""Package contains a set of interfaces to operate `{self._name}` application."""'
                 f" {Line.NEW.by_(2)}__author__: str = "
-                f'"{self._user.name}"{Line.NEW.value}__email__: str ='
-                f' "{self._user.email}"{Line.NEW.value}__license__: str = "MIT"{Line.NEW.value}'
+                f'"{self._user.name}"{Line.NEW}__email__: str ='
+                f' "{self._user.email}"{Line.NEW}__license__: str = "MIT"{Line.NEW}'
                 f'__copyright__: str = f"Copyright '
-                f'{datetime.now().year}, {{__author__}}"{Line.NEW.value}'
+                f'{datetime.now().year}, {{__author__}}"{Line.NEW}'
                 f'__version__: str = "0.0.0"{Line.NEW.by_(2)}'
-                f"app = None{Line.NEW.value}"
+                f"app = None{Line.NEW}"
             ),
         )
 
@@ -152,10 +156,10 @@ class _Application(Package):
             path=os.path.join(self._name, "__main__.py"),
             content=(
                 f'"""Represents executable entrypoint for `{self._name}` application."""'
-                f'{Line.NEW.by_(3)}def main() -> None:{Line.NEW.value}    """'
+                f'{Line.NEW.by_(3)}def main() -> None:{Line.NEW}    """'
                 f'Runs `{self._name}` application."""'
                 f"{Line.NEW.by_(2)}    pass{Line.NEW.by_(3)}"
-                f'if __name__ == "__main__":{Line.NEW.value}    main(){Line.NEW.value}'
+                f'if __name__ == "__main__":{Line.NEW}    main(){Line.NEW}'
             ),
         )
 
@@ -173,7 +177,7 @@ class _Tests(Package):
         write_to_file(
             path=os.path.join(self._tests, "__init__.py"),
             content=f'"""Package contains a set of interfaces to test '
-            f'`{self._name}` application."""{Line.NEW.value}',
+            f'`{self._name}` application."""{Line.NEW}',
         )
 
     def make_helpers(self) -> None:
@@ -181,27 +185,27 @@ class _Tests(Package):
         write_to_file(
             path=os.path.join(self._tests, "markers.py"),
             content=(
-                f"# flake8: noqa{Line.NEW.value}"
-                f"import _pytest.mark{Line.NEW.value}import pytest{Line.NEW.by_(2)}"
-                f"unit: _pytest.mark.MarkDecorator = pytest.mark.unit{Line.NEW.value}"
+                f"# flake8: noqa{Line.NEW}"
+                f"import _pytest.mark{Line.NEW}import pytest{Line.NEW.by_(2)}"
+                f"unit: _pytest.mark.MarkDecorator = pytest.mark.unit{Line.NEW}"
             ),
         )
         write_to_file(
             path=os.path.join(self._tests, "conftest.py"),
             content=(
-                f"# flake8: noqa{Line.NEW.value}"
-                f"from _pytest.config.argparsing import Parser{Line.NEW.value}"
+                f"# flake8: noqa{Line.NEW}"
+                f"from _pytest.config.argparsing import Parser{Line.NEW}"
                 f"from _pytest.fixtures import "
-                f"SubRequest{Line.NEW.value}import pytest{Line.NEW.value}"
+                f"SubRequest{Line.NEW}import pytest{Line.NEW}"
             ),
         )
         write_to_file(
             path=os.path.join(self._tests, "test_sample.py"),
-            content=f"# flake8: noqa{Line.NEW.value}"
-            f"import pytest{Line.NEW.value}"
+            content=f"# flake8: noqa{Line.NEW}"
+            f"import pytest{Line.NEW}"
             f"from tests.markers import unit{Line.NEW.by_(2)}"
             f"pytestmark = unit{Line.NEW.by_(3)}"
-            f"def test_me() -> None:{Line.NEW.value}    assert True{Line.NEW.value}",
+            f"def test_me() -> None:{Line.NEW}    assert True{Line.NEW}",
         )
 
 
