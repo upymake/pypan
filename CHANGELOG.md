@@ -1,6 +1,14 @@
 Versions
 ========
 
+0.0.14
+========
+
+_Release date: 26.07.2020_
+
+- Skip string normalization within 'pyproject.toml' config file
+- Generate '\__all\__' attribute
+
 0.0.13
 ========
 
