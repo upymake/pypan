@@ -47,6 +47,8 @@ After please run **pypan** tool from your shell:
 pypan
 ```
 
+> Please modify `README.md` file for your needs afterwards.
+
 ### Source code
 
 ```bash
