@@ -8,4 +8,6 @@ max-function-length = 30
 statistics = True
 count = True
 eradicate-aggressive = True
+pytest-parametrize-names-type = csv
+pytest-parametrize-values-type = tuple
 ignore = I100, I201, ANN101, ANN102
