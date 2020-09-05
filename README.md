@@ -17,7 +17,7 @@
 
 # Pypan
 
-> A command-line utility that creates fresh **python** project from base template.
+> A command-line utility that creates a fresh **python** project interactively right within your shell.
 
 ## Tools
 
