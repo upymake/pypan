@@ -5,6 +5,7 @@ from enum import Enum
 import click
 from termcolor import colored
 from punish.style import AbstractStyle
+from pypans import __version__
 from pypans.file import Template
 from pypans.project import Line, Project, User  # noqa: I100
 
@@ -177,15 +178,20 @@ def _build_environment() -> None:
       >>> Install python dependencies (optional){Line.NEW}
     """,
 )
-def _easypan(start: bool) -> None:
+@click.option(
+    "--version", "-v", is_flag=True, default=False, help="Display tool version."
+)
+def _easypan(start: bool, version: bool) -> None:
     """Runs `pypan` command line utility.
 
-    Program allows to interactively compose python project template from the scratch.
+    Program allows to interactively compose
+    python project template from the scratch.
     """
     if start:
-        _build_environment()
-    else:
-        click.echo(click.get_current_context().get_help())
+        return _build_environment()
+    if version:
+        return click.echo(f'Version {__version__}')
+    return click.echo(click.get_current_context().get_help())
 
 
 if __name__ == "__main__":
