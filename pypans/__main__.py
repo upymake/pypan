@@ -47,12 +47,33 @@ class _Environment(AbstractStyle):
         self._user = user
         self._project: Project = Project(name, user)
         self.__red_out: _Output = _Output(color="red")
+        self.__green_out: _Output = _Output(color="green")
 
     def setup_project(self) -> None:
         """Builds given project."""
         self._project.build_package()
         self._project.build_tests()
         self._project.build_meta()
+
+    def setup_venv(self) -> None:
+        """Builds python virtual environment."""
+        venv: str = input(
+            colored(
+                f">>> Would you like to setup python venv for `{self._name}` "
+                "project? (yes/no): ",
+                color="green",
+            )
+        )
+        if venv == "yes":
+            self.__green_out.write("Installing python venv")
+            os.system(command="python3 -m venv venv && . venv/bin/activate")
+        else:
+            self.__red_out.write(
+                string=(
+                    f">>> {_Emoji.SIREN} Setup with venv is skipped for "
+                    f"`{self._name}` project {_Emoji.SIREN}"
+                )
+            )
 
     def setup_git(self) -> None:
         """Sets up git for a project."""
@@ -149,6 +170,7 @@ def _build_environment() -> None:
             ),
         ),
     )
+    environment.setup_venv()
     environment.setup_project()
     environment.setup_git()
     environment.install_requirements()
