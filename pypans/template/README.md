@@ -22,15 +22,20 @@
 
 ## Tools
 
+### Production
 - python 3.6, 3.7, 3.8
-- [travis](https://travis-ci.org/) CI
-- code analysis
-  - [pytest](https://pypi.org/project/pytest/)
-  - [black](https://black.readthedocs.io/en/stable/)
-  - [mypy](http://mypy.readthedocs.io/en/latest)
-  - [pylint](https://www.pylint.org/)
-  - [flake8](http://flake8.pycqa.org/en/latest/)
-  - [pydocstyle](https://github.com/PyCQA/pydocstyle)
+
+### Development
+
+- [travis](https://travis-ci.org/)
+- [pytest](https://pypi.org/project/pytest/)
+- [black](https://black.readthedocs.io/en/stable/)
+- [mypy](http://mypy.readthedocs.io/en/latest)
+- [pylint](https://www.pylint.org/)
+- [flake8](http://flake8.pycqa.org/en/latest/)
+- [pydocstyle](https://github.com/PyCQA/pydocstyle)
+- [interrogate](https://interrogate.readthedocs.io/en/latest)
+- [check-manifest](https://pypi.org/project/check-manifest)
 
 ## Usage
 
