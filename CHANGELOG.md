@@ -1,13 +1,21 @@
 Versions
 ========
 
-0.0.14
+0.0.15
 ========
 
-_Release date: 26.07.2020_
+_Release date: 08.11.2020_
 
-- Skip string normalization within 'pyproject.toml' config file
-- Generate '\__all\__' attribute
+- Add package tests
+- Setup python venv
+- Define used tools
+- Add `--version` option
+- Use 80 chars for code
+- Add twitter link
+- Update objective of a project
+- Separate supported python versions via comma
+- Get rid of mypy strict validation
+- Allow csv for pytest parametrization
 
 0.0.13
 ========

@@ -66,7 +66,7 @@ pypan
 
 Or using direct release:
 ```bash
-pip install git+https://github.com/vyahello/pypans@0.0.1
+pip install git+https://github.com/vyahello/pypans@0.0.15
 pypan
 ```
 
