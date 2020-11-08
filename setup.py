@@ -8,7 +8,10 @@ from pypans import (
     __name__ as __name,
     __version__ as __version,
 )
-from setuptools import find_packages as __find_packages, setup as __compose_package
+from setuptools import (
+    find_packages as __find_packages,
+    setup as __compose_package,
+)
 
 
 def __readme() -> str:
@@ -43,7 +46,9 @@ if __name__ == "__main__":
         long_description=__readme(),
         long_description_content_type="text/markdown",
         url=f"https://github.com/vyahello/{__name}",
-        packages=__find_packages(exclude=("*.tests", "*.tests.*", "tests.*", "tests")),
+        packages=__find_packages(
+            exclude=("*.tests", "*.tests.*", "tests.*", "tests")
+        ),
         include_package_data=True,
         install_requires=__requirements(),
         classifiers=(
@@ -54,5 +59,5 @@ if __name__ == "__main__":
             "Operating System :: OS Independent",
         ),
         python_requires=">=3.6",
-        entry_points={"console_scripts": ("pypan = pypans.__main__:easypan",)},
+        entry_points={"console_scripts": ("pypan = pypans.__main__:_easypan",)},
     )

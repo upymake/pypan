@@ -29,7 +29,7 @@ class Line(Enum):
 
 
 def _copy_site_files_here() -> None:
-    """Copies all files from site packaging location into current root location."""
+    """Copies all files from site packaging into current root location."""
     Template.files_from(
         from_path=os.path.join(
             site.getsitepackages()[0],  # pylint:disable=no-member
@@ -65,69 +65,110 @@ class _Meta(AbstractStyle):
 
     def build_analyser(self) -> None:
         """Builds analyser file."""
-        replace_content(str(Template.ANALYSER), from_replace="<package>", to_replace=self._name)
+        replace_content(
+            str(Template.ANALYSER),
+            from_replace="<package>",
+            to_replace=self._name,
+        )
         os.system(command=f"chmod a+x {Template.ANALYSER}")
 
     def build_readme(self) -> None:
         """Builds readme file."""
-        replace_content(str(Template.README), from_replace="<package>", to_replace=self._name)
-        replace_content(str(Template.README), from_replace="<username>", to_replace=self._user.name)
-        replace_content(str(Template.README), from_replace="<email>", to_replace=self._user.email)
+        replace_content(
+            str(Template.README),
+            from_replace="<package>",
+            to_replace=self._name,
+        )
+        replace_content(
+            str(Template.README),
+            from_replace="<username>",
+            to_replace=self._user.name,
+        )
+        replace_content(
+            str(Template.README),
+            from_replace="<email>",
+            to_replace=self._user.email,
+        )
 
     def build_license(self) -> None:
         """Builds license file."""
         replace_content(
-            str(Template.LICENSE), from_replace="<year>", to_replace=str(datetime.now().year)
+            str(Template.LICENSE),
+            from_replace="<year>",
+            to_replace=str(datetime.now().year),
         )
         replace_content(
-            str(Template.LICENSE), from_replace="<username>", to_replace=self._user.name
+            str(Template.LICENSE),
+            from_replace="<username>",
+            to_replace=self._user.name,
         )
 
-    def build_packaging(self) -> None:
+    def build_package(self) -> None:
         """Builds packaging files."""
         replace_content(
             str(Template.CHANGELOG),
             from_replace="<date>",
             to_replace="{:%d.%m.%Y}".format(datetime.now()),
         )
-        replace_content(str(Template.MANIFEST), from_replace="<package>", to_replace=self._name)
+        replace_content(
+            str(Template.MANIFEST),
+            from_replace="<package>",
+            to_replace=self._name,
+        )
         replace_content(
             str(Template.PYPIRC),
             from_replace="<username>",
             to_replace=self._user.name.lower().replace(" ", "."),
         )
-        replace_content(str(Template.SETUP), from_replace="tooling", to_replace=self._name)
+        replace_content(
+            str(Template.SETUP), from_replace="tooling", to_replace=self._name
+        )
         replace_content(
             str(Template.RUNTIME),
             from_replace="<version>",
             to_replace=".".join(map(str, sys.version_info[:3])),
         )
         replace_content(
-            str(Template.PROCFILE), from_replace="<package>", to_replace=self._name,
+            str(Template.PROCFILE),
+            from_replace="<package>",
+            to_replace=self._name,
         )
         write_to_file(
             path=f"{self._name}.py",
             content=f"# flake8: noqa{Line.NEW}"
-            f'"""Module contains entrypoint interfaces for an application."""{Line.NEW.by_(2)}'
+            '"""Module contains entrypoint interfaces for '
+            f'an application."""{Line.NEW.by_(2)}'
             f"from {self._name} import app{Line.NEW}",
         )
 
     def build_pytest(self) -> None:
         """Builds pytest file."""
-        replace_content(str(Template.PYTEST), from_replace="<package>", to_replace=self._name)
+        replace_content(
+            str(Template.PYTEST),
+            from_replace="<package>",
+            to_replace=self._name,
+        )
 
     def build_authors(self) -> None:
         """Builds authors file."""
         replace_content(
-            str(Template.AUTHORS), from_replace="<username>", to_replace=self._user.name
+            str(Template.AUTHORS),
+            from_replace="<username>",
+            to_replace=self._user.name,
         )
-        replace_content(str(Template.AUTHORS), from_replace="<email>", to_replace=self._user.email)
+        replace_content(
+            str(Template.AUTHORS),
+            from_replace="<email>",
+            to_replace=self._user.email,
+        )
 
 
 class _Application(Package):
     """Represents application content builder."""
 
-    def __init__(self, name: str, user: User) -> None:  # pylint: disable=super-init-not-called
+    def __init__(
+        self, name: str, user: User
+    ) -> None:  # pylint: disable=super-init-not-called
         self._name: str = name
         self._user: User = user
 
@@ -137,10 +178,12 @@ class _Application(Package):
         write_to_file(
             path=os.path.join(self._name, "__init__.py"),
             content=(
-                f'"""Package contains a set of interfaces to operate `{self._name}` application."""'
+                '"""Package contains a set of '
+                f'interfaces to operate `{self._name}` application."""'
                 f" {Line.NEW.by_(2)}__author__: str = "
                 f'"{self._user.name}"{Line.NEW}__email__: str ='
-                f' "{self._user.email}"{Line.NEW}__license__: str = "MIT"{Line.NEW}'
+                f' "{self._user.email}"'
+                f'{Line.NEW}__license__: str = "MIT"{Line.NEW}'
                 f'__copyright__: str = f"Copyright '
                 f'{datetime.now().year}, {{__author__}}"{Line.NEW}'
                 f'__version__: str = "0.0.0"{Line.NEW.by_(2)}'
@@ -154,7 +197,8 @@ class _Application(Package):
         write_to_file(
             path=os.path.join(self._name, "__main__.py"),
             content=(
-                f'"""Represents executable entrypoint for `{self._name}` application."""'
+                '"""Represents executable entrypoint '
+                f'for `{self._name}` application."""'
                 f'{Line.NEW.by_(3)}def main() -> None:{Line.NEW}    """'
                 f'Runs `{self._name}` application."""'
                 f"{Line.NEW.by_(2)}    pass{Line.NEW.by_(3)}"
@@ -166,7 +210,9 @@ class _Application(Package):
 class _Tests(Package):
     """Represents tests content builder."""
 
-    def __init__(self, name: str) -> None:  # pylint: disable=super-init-not-called
+    def __init__(
+        self, name: str
+    ) -> None:  # pylint: disable=super-init-not-called
         self._name: str = name
         self._tests: str = self.__class__.__name__.lower()[1:]
 
@@ -254,6 +300,6 @@ class Project(AbstractStyle):
         self._builder.meta.build_analyser()
         self._builder.meta.build_authors()
         self._builder.meta.build_license()
-        self._builder.meta.build_packaging()
+        self._builder.meta.build_package()
         self._builder.meta.build_pytest()
         self._builder.meta.build_readme()

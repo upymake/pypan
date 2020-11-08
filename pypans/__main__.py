@@ -38,7 +38,7 @@ class _Output(AbstractStyle):
         return sys.stdout.write(f"{colored(string, self._color)}{Line.NEW}")
 
 
-class __Environment(AbstractStyle):
+class _Environment(AbstractStyle):
     """Representation of project environment."""
 
     def __init__(self, name: str, user: User) -> None:
@@ -59,7 +59,9 @@ class __Environment(AbstractStyle):
         def prepare(to_repo: str) -> None:
             os.system(command="git init")
             os.system(command=f"git config --local user.name {self._user.name}")
-            os.system(command=f"git config --local user.email {self._user.email}")
+            os.system(
+                command=f"git config --local user.email {self._user.email}"
+            )
             os.system(command=f"git remote add origin {to_repo}")
 
         git: str = input(
@@ -119,19 +121,31 @@ class __Environment(AbstractStyle):
             )
 
 
-def __build_environment() -> None:
+def _build_environment() -> None:
     """Builds fully-fledged environment."""
     green_output: _Output = _Output(color="green")
     green_output.write(
-        string=f">>> {_Emoji.PAN} Welcome to `pypan` python project builder utility {_Emoji.PAN}",
+        string=f">>> {_Emoji.PAN} Welcome to `pypan` python project "
+        f"builder utility {_Emoji.PAN}",
     )
     green_output.write(string=">>>")
-    name: str = input(colored(">>> Please name your application (e.g bomber): ", "green"))
-    environment: __Environment = __Environment(
+    name: str = input(
+        colored(">>> Please name your application (e.g bomber): ", "green")
+    )
+    environment: _Environment = _Environment(
         name=name,
         user=User(
-            name=input(colored(">>> Please enter your username (e.g John Udot): ", "green")),
-            email=input(colored(">>> Please enter your email (e.g user@gmail.com): ", "green")),
+            name=input(
+                colored(
+                    ">>> Please enter your username (e.g John Udot): ", "green"
+                )
+            ),
+            email=input(
+                colored(
+                    ">>> Please enter your email (e.g user@gmail.com): ",
+                    "green",
+                )
+            ),
         ),
     )
     environment.setup_project()
@@ -163,16 +177,16 @@ def __build_environment() -> None:
       >>> Install python dependencies (optional){Line.NEW}
     """,
 )
-def easypan(start: bool) -> None:
+def _easypan(start: bool) -> None:
     """Runs `pypan` command line utility.
 
     Program allows to interactively compose python project template from the scratch.
     """
     if start:
-        __build_environment()
+        _build_environment()
     else:
         click.echo(click.get_current_context().get_help())
 
 
 if __name__ == "__main__":
-    easypan()  # pylint:disable=no-value-for-parameter
+    _easypan()  # pylint:disable=no-value-for-parameter

@@ -14,7 +14,11 @@ def write_to_file(path: str, content: str, mode: str = "a") -> None:
 def replace_content(path: str, from_replace: str, to_replace: str) -> None:
     """Replaces file content."""
     with open(path) as file:  # type: IO[str]
-        write_to_file(path, content=file.read().replace(from_replace, to_replace), mode="w")
+        write_to_file(
+            path,
+            content=file.read().replace(from_replace, to_replace),
+            mode="w",
+        )
 
 
 class Template(Enum):
@@ -46,7 +50,9 @@ class Template(Enum):
     def files_from(cls, from_path: str = "./") -> None:
         """Creates template files from given path."""
         for template in cls:  # type: Template
-            shutil.copyfile(os.path.join(from_path, template.value), template.value)
+            shutil.copyfile(
+                os.path.join(from_path, template.value), template.value
+            )
 
     def __str__(self) -> Any:
         """Returns value of a template."""
