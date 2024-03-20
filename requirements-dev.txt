@@ -5,7 +5,7 @@ pytest-clarity==0.3.0a0
 pytest-cov==2.8.1
 pdbpp==0.10.2
 pydocstyle==5.0.2
-black==19.10b0
+black==24.3.0
 pylint==2.4.4
 mypy==0.770
 flake8==3.7.9
